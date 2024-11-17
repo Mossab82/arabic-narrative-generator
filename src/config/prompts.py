@@ -32,3 +32,16 @@ Include:
 4. Background story
 5. Motivations
 6. Speech patterns
+
+SETTING_GENERATION_PROMPT = """
+Create a vivid setting for an Arabic narrative in the classical style:
+Time Period: {period}
+Location Type: {location}
+Atmosphere: {atmosphere}
+
+Include:
+1. Sensory details
+2. Cultural elements
+3. Historical authenticity
+4. Magical elements (if applicable)
+"""
