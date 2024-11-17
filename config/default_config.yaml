@@ -1,0 +1,38 @@
+```yaml
+system:
+  name: "Arabic Narrative Generator"
+  version: "1.0.0"
+  language: "ar"
+
+data:
+  sources:
+    - name: "wikisource"
+      url: "https://ar.wikisource.org/wiki/ألف_ليلة_وليلة"
+    - name: "archive_org"
+      url: "https://archive.org/details/thousand-nights"
+    - name: "al_hakawati"
+      url: "http://al-hakawati.net"
+
+models:
+  transformer:
+    name: "arabert"
+    version: "base"
+    vocab_size: 32000
+    max_length: 512
+ 
+processing:
+  batch_size: 32
+  max_story_length: 10000
+  min_story_length: 1000
+
+evaluation:
+  metrics:
+    - coherence
+    - grammar
+    - style
+    - cultural_authenticity
+  thresholds:
+    coherence: 0.8
+    grammar: 0.9
+    style: 0.7
+    cultural_authenticity: 0.85
