@@ -1,22 +1,22 @@
-```python
 import pytest
-from src.processors.text_processor import TextProcessor
+from src.processors.text_preprocessor import TextPreprocessor
 
 @pytest.fixture
-def processor():
-    return TextProcessor()
+def preprocessor():
+    return TextPreprocessor()
 
-def test_text_normalization(processor):
-    test_text = "قَالَ شَهْرَيَارُ"
-    normalized = processor.normalize_text(test_text)
-    assert isinstance(normalized, str)
-    assert normalized != test_text
-    assert "قال شهريار" in normalized
+def test_clean_text(preprocessor):
+    text = "تَجْرِبَةٌ  "
+    result = preprocessor.clean_text(text)
+    assert result == "تجربة"
 
-def test_text_tokenization(processor):
-    test_text = "قال شهريار لشهرزاد"
-    tokens = processor.tokenize_text(test_text)
-    assert isinstance(tokens, list)
-    assert len(tokens) == 3
-    assert "قال" in tokens
-    assert "شهريار" in tokens
+def test_normalize_arabic(preprocessor):
+    text = "إختبار"
+    result = preprocessor.normalize_arabic(text)
+    assert result == "اختبار"
+
+def test_tokenize(preprocessor):
+    text = "هذا اختبار"
+    result = preprocessor.tokenize(text)
+    assert result == ["هذا", "اختبار"]
+
