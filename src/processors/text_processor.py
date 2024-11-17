@@ -1,33 +1,70 @@
-```python
-from typing import Dict, List, Any
-from camel_tools.utils.normalize import normalize_unicode
+from camel_tools.utils.dediac import dediac_ar
 from camel_tools.tokenizers.word import simple_word_tokenize
 
-class TextProcessor:
+class TextPreprocessor:
     def __init__(self):
-        self.normalizer = normalize_unicode
-        self.tokenizer = simple_word_tokenize
+        """
+        Initializes the text preprocessor for Arabic text.
+        """
+        pass
 
-    def process(self, text: str) -> Dict[str, Any]:
-        normalized = self.normalize_text(text)
-        tokenized = self.tokenize_text(normalized)
-        cleaned = self.clean_text(tokenized)
-        return {
-            'original': text,
-            'normalized': normalized,
-            'tokenized': tokenized,
-            'cleaned': cleaned
+    def preprocess_text(self, text):
+        """
+        Preprocess Arabic text by normalizing, removing diacritics, and tokenizing.
+
+        Args:
+            text (str): Input Arabic text.
+
+        Returns:
+            str: Preprocessed and tokenized text.
+        """
+        cleaned_text = self.clean_text(text)
+        normalized_text = self.normalize_arabic(cleaned_text)
+        tokenized_text = self.tokenize(normalized_text)
+        return tokenized_text
+
+    def clean_text(self, text):
+        """
+        Removes diacritics and excessive whitespace.
+
+        Args:
+            text (str): Input Arabic text.
+
+        Returns:
+            str: Cleaned text.
+        """
+        text = dediac_ar(text)  # Removes diacritics
+        return " ".join(text.split())  # Removes extra spaces
+
+    def normalize_arabic(self, text):
+        """
+        Normalizes Arabic characters (e.g., converts ي to ى).
+
+        Args:
+            text (str): Input Arabic text.
+
+        Returns:
+            str: Normalized text.
+        """
+        replacements = {
+            "إ": "ا",
+            "أ": "ا",
+            "آ": "ا",
+            "ة": "ه",
+            "ى": "ي"
         }
+        for key, value in replacements.items():
+            text = text.replace(key, value)
+        return text
 
-    def normalize_text(self, text: str) -> str:
-        return self.normalizer(text)
+    def tokenize(self, text):
+        """
+        Tokenizes Arabic text into words.
 
-    def tokenize_text(self, text: str) -> List[str]:
-        return self.tokenizer(text)
+        Args:
+            text (str): Input Arabic text.
 
-    def clean_text(self, tokens: List[str]) -> List[str]:
-        cleaned = []
-        for token in tokens:
-            # Add cleaning logic here
-            cleaned.append(token)
-        return cleaned
+        Returns:
+            list: List of tokens.
+        """
+        return simple_word_tokenize(text)
