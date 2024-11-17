@@ -17,3 +17,18 @@ Output the story structure in the following format:
 4. Plot Twists
 5. Resolution
 6. Moral Lesson
+"""
+
+CHARACTER_GENERATION_PROMPT = """
+Create a character for an Arabic narrative in the style of One Thousand and One Nights:
+Context: {context}
+Character Type: {character_type}
+Role in Story: {role}
+
+Include:
+1. Name and title
+2. Physical description
+3. Personality traits
+4. Background story
+5. Motivations
+6. Speech patterns
