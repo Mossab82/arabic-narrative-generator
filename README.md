@@ -38,3 +38,8 @@ elements = planner.plan_narrative_elements(plot)
 narrative = generator.generate_narrative(plot, elements)
 
 print(narrative)
+
+## Testing
+Run tests with pytest:
+```bash
+pytest tests/
